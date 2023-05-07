@@ -1,9 +1,9 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { UsersController } from './controllers/users.controller';
 import { AuthModule } from 'src/auth/auth.module';
-import { UsersRepository } from './users.repository';
+import { UsersRepository } from './repository/users.repository';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from './users.schema';
+import { User, UserSchema } from './schema/users.schema';
 import { UsersService } from './services/users.service';
 
 @Module({

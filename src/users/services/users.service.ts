@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { UsersRepository } from '../users.repository';
+import { UsersRepository } from '../repository/users.repository';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -16,6 +16,7 @@ export class UsersService {
       throw new UnauthorizedException('user already exists');
     }
 
+    // TODO: 패스워드 규칙 세팅
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await this.userRepository.create({
@@ -39,11 +40,19 @@ export class UsersService {
     return readOnlyUser;
   }
 
-  async update(id: string, body: UpdateUserDto) {
-    const { email, name, password } = body;
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const data = { email, name, password: hashedPassword };
-    return await this.userRepository.updateOne(id, data);
+  async update(body: UpdateUserDto) {
+    const { id, email, name, password } = body;
+    let passwordChangedData;
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      passwordChangedData = { email, name, password: hashedPassword };
+    }
+
+    return await this.userRepository.updateOne(
+      id,
+      passwordChangedData ? passwordChangedData : body,
+    );
   }
 
   async delete(id: string) {

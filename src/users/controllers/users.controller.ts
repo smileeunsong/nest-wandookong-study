@@ -4,7 +4,6 @@ import {
   Post,
   Body,
   Patch,
-  Param,
   Delete,
   UseInterceptors,
   UseFilters,
@@ -39,14 +38,15 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get()
+  @Get('all')
   findAll() {
     return this.usersService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
+  @Get()
+  findOne(@Body() body) {
+    const { id } = body;
     return this.usersService.findOne(id);
   }
 
@@ -54,14 +54,15 @@ export class UsersController {
   // TODO: 관리자는 모든 유저 정보를 업데이트, 삭제할 수 있다
   // TODO: 멤버는 자신의 정보만 업데이트, 삭제할 수 있다
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() body: UpdateUserDto) {
-    return this.usersService.update(id, body);
+  @Patch()
+  update(@Body() body: UpdateUserDto) {
+    return this.usersService.update(body);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete()
+  remove(@Body() body) {
+    const { id } = body;
     return this.usersService.delete(id);
   }
 }
