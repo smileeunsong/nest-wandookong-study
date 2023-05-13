@@ -17,6 +17,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       | string
       | { error: string; statusCode: number; Message: string | string[] };
 
+    // TODO: 예외처리 로직 개선 필요
     if (typeof error === 'string') {
       // 커스텀한 에러는 스트링으로 반환됨
       response.status(status).json({
