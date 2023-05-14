@@ -28,4 +28,6 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  static of: any;
 }

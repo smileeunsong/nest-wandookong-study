@@ -11,12 +11,12 @@ import {
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
-import { SuccessInterceptor } from 'src/common/interceptors/success.interceptor';
-import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
-import { AuthService } from 'src/auth/services/auth.service';
+import { SuccessInterceptor } from '@src/common/interceptors/success.interceptor';
+import { HttpExceptionFilter } from '@src/common/exceptions/http-exception.filter';
+import { AuthService } from '@src/auth/services/auth.service';
 import { UsersService } from '../services/users.service';
 import { LoginRequestDto } from '../dto/login.request.dto';
-import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
+import { JwtAuthGuard } from '@src/auth/jwt/jwt.guard';
 
 @Controller('users')
 @UseInterceptors(SuccessInterceptor)
